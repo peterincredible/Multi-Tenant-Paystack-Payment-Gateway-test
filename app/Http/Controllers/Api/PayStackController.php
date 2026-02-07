@@ -30,33 +30,29 @@ class PayStackController extends Controller
                 } 
                 
                $initialized_url = (new PayStackService())->initializePayment($request);
+              
                 // return "ok it passes hhhhhhh ". $initialized_url;
             return response()->json($initialized_url);
         }
         public function callbackURL(Request $request)
         {  
-               $reference = $request->reference;
-               $transaction = \App\Models\Transaction::where('reference', $reference)->first();
-               $application = Application::find($transaction->app_id);
+            try{
+                    $reference = $request->reference;
+                    $transaction = \App\Models\Transaction::where('reference', $reference)->first();
+                    $application = Application::find($transaction->app_id);
+                    // $testing = 5/0;
+                    
+                    $data = (new PayStackService())->verifyPayment($reference,$application);
+                    $status = $data['data']['status'] ?? null;
+                    $URL = $application->callback_url."?reference={$reference}";
+                    $URL .= "&status={$status}";
+                        
+                    return redirect()->away($URL);
+            }catch(\Exception $e){
+                Log::error("Error in callbackURL: " . $e->getMessage());
+                return response()->json(['message' => 'An error occurred in callbackURL: ' . $e->getMessage()], 500);
+            }
                
-               $data = (new PayStackService())->verifyPayment($reference,$application);
-               $status = $data['data']['status'] ?? null;
-               $URL = $application->callback_url."?reference={$reference}";
-               $URL .= "&status={$status}";
-                // Log::info("callbackurl -----hmmmmm-----");
-
-            //    $response = (new PayStackService())->verifyPayment($reference, $application->pay
-
-               /*
-                $transaction = \App\Models\Transaction::where('reference', $reference)->first();
-                if (!$transaction) {
-                    return response()->json(['message' => 'Transaction not found'], 404);
-                }
-                $transaction->status = "success";
-                $transaction->paid_at = now();
-                $transaction->save();
-                */
-               return redirect()->away($URL);
         }
         public function webhookURL(Request $request)
         {  

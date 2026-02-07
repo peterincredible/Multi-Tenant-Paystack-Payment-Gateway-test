@@ -41,7 +41,7 @@ class PayStackService
                 $transaction_data->currency = $request->currency;
                 $transaction_data->status = self::PENDING;
                 $transaction_data->save();
-
+                 Log::info("Payment initialized: successfull ".json_encode($response->json()));
                 // return $application->paystack_private_key."  ". $application->callback_url;
                 return $response->json();
         }catch(\Exception $e){
@@ -105,6 +105,7 @@ class PayStackService
                 }
 
                 */
+            Log::info("Payment verification completed for reference: {$reference} with status: {$status}");
             return $data;
 
         }catch(\Exception $e){
@@ -146,7 +147,7 @@ class PayStackService
                         "id"=>$request->data['id'] ?? null,
                         "status"=>$request->data['status'] ?? null,
                         "reference"=>$request->data['reference'] ?? null,
-                        "amount"=>$request->data['amount'] ?? null,
+                        "amount"=>($request->data['amount']/100) ?? null,
                         "currency"=>$request->data['currency'] ?? null,
                     ]
                 ];

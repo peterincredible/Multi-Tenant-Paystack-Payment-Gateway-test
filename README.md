@@ -92,7 +92,7 @@ after making payment it will redirect you to your callback_url you provided with
 if successfull a webhook event will be sent to the webhook url you provided during registering your application to the central gateway
 
 # some other things to do
-the (centrall payment app) webhook listener url should be the url that is registered at the  individual paystack webhook url field in paystack. this will make the centrall payment app recieve events from the paystack system, validate the request and then do some further things on the backend and then redirect the data to the individual application that is meant to recieve the event.
+the (centrall payment app) webhook listener url should be the url that is registered at the  individual Application paystack webhook url field in paystack. this will make the centrall payment app recieve events from the paystack system, validate the request and then do some further things on the backend and then redirect the data to the individual application that is meant to recieve the event.
 
 
 
