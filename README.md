@@ -70,8 +70,28 @@ the following property
 4. callback_url
 5. webhook_url
 
-to the gateway link  ** {{url}}/api/application**
+to the gateway link  **url/api/application**
 and then a response will be sent back which contains the property **id** which is the application id
+
+## Making payment through the central gateway
+to make payment through the central gateway the application have to 
+
+# first
+send the following properties (app_id,email,amount,currency,reference) to the **url/api/initializePayment** to initialize payment and a response that contains the paystack payment link for payment will be given to you and the name of the url property is                  **authorization_url**. copy the authorization url and paste on your browser and it will take to where to make payment
+
+note 
+app_id is the application id given to you by the centrall gateway
+reference property must be unique 
+
+
+
+# secondly
+after making payment it will redirect you to callback_url you provided with a status query attached to it
+
+# thirdly
+if successfull a webhook event will be sent to the webhook url you provided during registering your application to the central gateway
+
+
 
 
 
