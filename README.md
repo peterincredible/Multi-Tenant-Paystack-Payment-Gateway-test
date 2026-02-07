@@ -77,19 +77,22 @@ and then a response will be sent back which contains the property **id** which i
 to make payment through the central gateway the application have to 
 
 # first
-send the following properties (app_id,email,amount,currency,reference) to the **url/api/initializePayment** to initialize payment and a response that contains the paystack payment link for payment will be given to you and the name of the url property is                  **authorization_url**. copy the authorization url and paste on your browser and it will take to where to make payment
+send the following properties (app_id,email,amount,currency,reference) to the **url/api/initializePayment** to initialize payment and a response that contains the paystack payment link for payment will be given to you and the name of the url property is                  **authorization_url**. copy the authorization url and paste it on your browser and it will take you  to where to make payment
 
 note 
-app_id is the application id given to you by the centrall gateway
+app_id is the application id given to you by the centrall gateway while the 
 reference property must be unique 
 
 
 
 # secondly
-after making payment it will redirect you to callback_url you provided with a status query attached to it
+after making payment it will redirect you to your callback_url you provided with a status query attached to it
 
 # thirdly
 if successfull a webhook event will be sent to the webhook url you provided during registering your application to the central gateway
+
+# some other things to do
+the (centrall payment app) webhook listener url should be the url that is registered at the  individual paystack webhook url field in paystack. this will make the centrall payment app recieve events from the paystack system, validate the request and then do some further things on the backend and then redirect the data to the individual application that is meant to recieve the event.
 
 
 
