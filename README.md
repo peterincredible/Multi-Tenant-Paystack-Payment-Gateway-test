@@ -69,6 +69,7 @@ the following property
 3. paystack_private_key
 4. callback_url
 5. webhook_url
+
 to the gateway link  ** {{url}}/api/application**
 and then a response will be sent back which contains the property **id** which is the application id
 
